@@ -1,101 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
+ <!DOCTYPE html>
+ <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    #screen {
-      border: 10px solid #ccc;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-      image-rendering: -moz-crisp-edges;
-      width: 400px;
-      height: 400px;
-    }
-  </style>
+ <head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <style>
+     #screen {
+       border: 10px solid #ccc;
+       image-rendering: pixelated;
+       image-rendering: crisp-edges;
+       image-rendering: -moz-crisp-edges;
+       width: 400px;
+       height: 400px;
+     }
+   </style>
 
-  <title>Document</title>
-</head>
+   <title>Document</title>
+ </head>
 
-<body>
-  <canvas id="screen" width="15" height="15"></canvas>
-  <script>
-    const screen = document.getElementById('screen'); //puxar o elemento do html
-    const context = screen.getContext('2d'); //pegar o contexto do canvas
-    const testePlayer = 'player2'
+ <body>
+   <canvas id="screen" width="15" height="15"></canvas>
+   <script>
+     const screen = document.getElementById('screen'); //puxar o elemento do html
+     const context = screen.getContext('2d'); //pegar o contexto do canvas
+     const testePlayer = 'player2'
 
-    const game = { //objeto
-      players: {
-        'player1': {
-          x: 1,
-          y: 1
-        },
-        'player2': {
-          x: 11,
-          y: 11
-        }
-      },
-      fruits: {
-        'fruit1': {
-          x: 8,
-          y: 12
-        }
-      }
-    }
-    document.addEventListener('keydown', handleKeydown)
-    function handleKeydown(event) {
-      const keyPressed = event.keyCode
-      const player = game.players[testePlayer]
+     const game = { //objeto
+       players: {
+         'player1': {
+           x: 1,
+           y: 1
+         },
+         'player2': {
+           x: 11,
+           y: 11
+         }
+       },
+       fruits: {
+         'fruit1': {
+           x: 8,
+           y: 12
+         }
+       }
+     }
 
-      if (keyPressed === 37) {
-        player.x = player.x - 1
-        return
-      }
-      if (keyPressed === 38) {
-        player.y = player.y - 1
-        return
-      }
-      if (keyPressed === 39) {
-        player.x = player.x + 1
-        return
-      }
-      if (keyPressed === 40) {
-        player.y = player.y + 1
-        return
-      }
-       
-      
-    }
-    
-    renderScreen()
-    function clearscreen() {
-      context.fillStyle = 'white'
-      context.clearRect(0, 0, 15, 15)
+     document.addEventListener('keydown', handleKeydown)
 
-    }
+     function handleKeydown(event) {
+       const keyPressed = event.keyCode
+       const player = game.players[testePlayer]
 
-    function renderScreen() {
-      clearscreen()
+       if (keyPressed === 37 && player.x - 1 >= 0) { //left
+         player.x = player.x - 1
+         return
+       }
+       if (keyPressed === 38 && player.y - 1 >= 0) { //up
+         player.y = player.y - 1
+         return
+       }
+       if (keyPressed === 39 && player.x + 1 < screen.width) { //right
+         player.x = player.x + 1
+         return
+       }
+       if (keyPressed === 40 && player.y + 1 < screen.height) { // down
+         player.y = player.y + 1
+         return
+       }
 
 
+     }
 
-      for (const playerID in game.players) {
+     renderScreen()
 
-        const player = game.players[playerID]
-        context.fillStyle = 'black'
-        context.fillRect(player.x, player.y, 1, 1)
-      }
-      for (const fruitID in game.fruits) {
+     function clearscreen() {
+       context.fillStyle = 'white'
+       context.clearRect(0, 0, 15, 15)
 
-        const fruit = game.fruits[fruitID]
-        context.fillStyle = 'green'
-        context.fillRect(fruit.x, fruit.y, 1, 1)
-      }
-      requestAnimationFrame(renderScreen)
-    }
-  </script>
-</body>
+     }
 
-</html>
+     function renderScreen() {
+       clearscreen()
+
+
+
+       for (const playerID in game.players) {
+
+         const player = game.players[playerID]
+         context.fillStyle = 'black'
+         context.fillRect(player.x, player.y, 1, 1)
+       }
+       for (const fruitID in game.fruits) {
+
+         const fruit = game.fruits[fruitID]
+         context.fillStyle = 'green'
+         context.fillRect(fruit.x, fruit.y, 1, 1)
+       }
+       requestAnimationFrame(renderScreen)
+     }
+   </script>
+ </body>
+
+ </html>
